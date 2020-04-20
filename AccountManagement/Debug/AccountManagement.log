@@ -1,0 +1,4 @@
+﻿  card_file.c
+C:\Users\78706\Desktop\4\AMS\AccountManagement\card_file.c(84,32): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+C:\Users\78706\Desktop\4\AMS\AccountManagement\card_file.c(87,30): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  AccountManagement.vcxproj -> C:\Users\78706\Desktop\4\AMS\Debug\AccountManagement.exe

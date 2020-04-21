@@ -3,13 +3,4 @@ c:\users\12852\desktop\ams\accountmanagement\menu.c(47): warning C4047: “!=”
 c:\users\12852\desktop\ams\accountmanagement\menu.c(121): warning C4013: “getCardCount_binary”未定义；假设外部返回 int
 c:\users\12852\desktop\ams\accountmanagement\menu.c(120): warning C4101: “j”: 未引用的局部变量
 c:\users\12852\desktop\ams\accountmanagement\menu.c(389): warning C4013: “annualCard”未定义；假设外部返回 int
-  service.c
-c:\users\12852\desktop\ams\accountmanagement\service.c(16): warning C4013: “saveCard_binary”未定义；假设外部返回 int
-c:\users\12852\desktop\ams\accountmanagement\service.c(50): warning C4013: “updateCard_binary”未定义；假设外部返回 int
-c:\users\12852\desktop\ams\accountmanagement\service.c(254): warning C4013: “getCardCount_binary”未定义；假设外部返回 int
-c:\users\12852\desktop\ams\accountmanagement\service.c(263): warning C4013: “timeToString”未定义；假设外部返回 int
-c:\users\12852\desktop\ams\accountmanagement\service.c(297): warning C4101: “aLastTime”: 未引用的局部变量
-  正在生成代码...
-c:\users\12852\desktop\ams\accountmanagement\service.c(269): warning C4716: “annualCard”: 必须返回一个值
-c:\users\12852\desktop\ams\accountmanagement\service.c(328): warning C4716: “CardRecord”: 必须返回一个值
   AccountManagement.vcxproj -> C:\Users\12852\Desktop\AMS\x64\Debug\AccountManagement.exe

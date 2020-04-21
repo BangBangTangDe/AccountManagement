@@ -132,7 +132,7 @@ void query()  //查询卡信息
 		pCard = (Card *)malloc(sizeof(Card));
 
 		queryCardInfo(num,&pCard);
-		if (pCard == NULL)
+		if (strcmp(pCard->Number,num)!=0)
 		{
 			printf("所查询的卡号不存在！\n");
 		}
@@ -151,7 +151,7 @@ void query()  //查询卡信息
 		printf("请输入模糊查询的关键字(长度1-18):\n");
 		scanf("%s", num);
 		pCard=QueryCards(num, &length);
-		if (pCard == NULL)
+		if (strcmp(pCard->Number, num) != 0)
 		{
 			printf("所查询的卡号不存在！\n");
 		}

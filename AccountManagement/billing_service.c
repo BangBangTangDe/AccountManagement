@@ -91,3 +91,15 @@ Billing* queryBilling(const char* pName, int* pIndex) {
 	}
 	return NULL;
 }
+BillingNode *GetBillList()
+{
+	lpBillingNode node = NULL;
+	int nIndex = 0;
+	if (FALSE == getBilling()) {
+
+		return NULL;
+	}
+	node = billingList;
+	return node;
+
+}

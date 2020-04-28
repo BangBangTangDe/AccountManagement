@@ -77,9 +77,14 @@ int doSettle(const char* pName, const char* pPwd, SettleInfo* pInfo) {
 	double dbAmount = 0.0;
 	float fBalance = 0.0;
 	pBilling = queryBilling(pName,&nPosition);
-	checkCard(pName,pPwd,&nIndex,&pCard);
-	if (pBilling==NULL) {
+	if (!checkCard(pName, pPwd, &nIndex, &pCard))
+	{
 		printf("无该卡信息，请重新输入!\n");
+		return FALSE;
+	}
+
+	if (pBilling==NULL) {
+		//printf("无该卡信息，请重新输入!\n");
 		return FALSE;
 	}
 	
@@ -112,6 +117,17 @@ int doSettle(const char* pName, const char* pPwd, SettleInfo* pInfo) {
 }
 double getAmount(time_t tStart) {
 
+
+	int UNIT = 0;
+	float CHARGE = 0;
+	FILE *fp = fopen(CHARGEPATH, "rb+");
+	if (fp == NULL)
+	{
+		printf("文件打开失败");
+		return 0;
+	}
+	fscanf(fp,"%d%f", &UNIT, &CHARGE);
+
 	double dbAmount = 0;
 	int nCount = 0;
 	int nSec = 0;
@@ -141,7 +157,7 @@ int doAddMoney(const char *pName, const char *pPwd, MoneyInfo *moneyinfo)
 	int nIndex = 0;
 	checkCard(pName, pPwd, &nIndex, &pCard);
 
-	if (pCard == NULL) {
+	if (strcmp(pCard->Number,pName)!=0) {
 		printf("找不到该卡信息，充值失败!\n");
 		return FALSE;
 	}
@@ -178,7 +194,7 @@ int doRefoundMoney(const char *pName, const char *pPwd, MoneyInfo *moneyinfo)
 	float fbalance = 0.0;
 	checkCard(pName, pPwd, &nIndex, &pCard);
 
-	if (pCard == NULL) {
+	if (strcmp(pCard->Number, pName) != 0) {
 		printf("找不到该卡信息，退费失败!\n");
 		return FALSE;
 	}
@@ -223,7 +239,7 @@ int annulCard(Card *p)
 	if (p == NULL)
 		return FALSE;
 	checkCard(p->Number, p->Password, &index,&cur);
-	if (cur == NULL)
+	if (cur == NULL ||cur->Status==UNUSE)
 	{
 		return FALSE;
 	}
@@ -325,4 +341,29 @@ int CardRecord()
 	printf("注销卡数量：%d\n", cnt);
 	printf("上机卡数量：%d\n", shangji);
 	printf("正常卡数量：%d\n", xiaji);
+}
+//统计上下机消费记录
+int billRecord() {
+	
+	lpBillingNode node = NULL;
+	if (FALSE == getBilling()) {
+
+		return NULL;
+	}
+	node = GetBillList()->next;
+	char t[36] = { 0 };
+	char e[36] = { 0 };
+	printf("**************上下机记录***************\n");
+	printf("卡号\t消费金额\t上机时间\t下机时间\t说明\n");
+	for (node; node!=NULL; node=node->next)
+	{
+		timeToString(node->data.tStart, t);
+		if(node->data.nStatus==0)
+		printf("%s\t%f\t%s\t未下机\t未结算\n", node->data.aCardName, node->data.fAmount, t);
+		else {
+			timeToString(node->data.tEnd, e);
+			printf("%s\t%f\t%s\t%s\t结算\n", node->data.aCardName, node->data.fAmount, t,e);
+		}
+	}
+	return TRUE;
 }

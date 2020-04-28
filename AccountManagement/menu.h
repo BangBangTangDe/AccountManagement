@@ -3,10 +3,16 @@
 void ExitSystem();
 void addCard();
 void outputMenu(); //º¯ÊıÉùÃ÷
+void mainMenu();
+void manageMenu();
 void logon();
 void settle();
 void addMoney();
 void refundMoney();
 void annul();
 void collectInfo();
+
+
+int delete_card();
+void update_charge();
 #endif

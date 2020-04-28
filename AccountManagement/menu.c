@@ -11,6 +11,21 @@
 #include"tool.h"
 #include"service.h"
  //头文件引入
+void mainMenu()
+{
+	printf("***********欢迎进入网吧管理系统************\n");
+	printf("1.普通管理员界面\n");
+	printf("2.超级管理员界面\n");
+	printf("0.退出\n");
+}
+void manageMenu()
+{
+	printf("欢迎进入超级管理员界面\n");
+	printf("1.删除卡用户\n");
+	printf("2.修改计费信息\n");
+	printf("0.退出\n");
+
+}
 void outputMenu()    //展示菜单
 {
 	printf("-----欢迎使用计费管理系统-----\n");
@@ -23,6 +38,7 @@ void outputMenu()    //展示菜单
 	printf("6.退费\n");
 	printf("7.查询统计\n");
 	printf("8.注销卡\n");
+	printf("9.返回\n");
 	printf("0.退出系统\n");
 	printf("请根据您所需的功能，输入0到8的数字选择对应功能:\n");
 
@@ -151,7 +167,7 @@ void query()  //查询卡信息
 		printf("请输入模糊查询的关键字(长度1-18):\n");
 		scanf("%s", num);
 		pCard=QueryCards(num, &length);
-		if (strcmp(pCard->Number, num) != 0)
+		if ((length)== 0)
 		{
 			printf("所查询的卡号不存在！\n");
 		}
@@ -379,7 +395,7 @@ void annul()
 void collectInfo()
 {
 	printf("***************查询统计*****************\n");
-	printf("1.注销卡信息显示\n2.所有卡信息以及消费总额\n3.充值退费信息显示\n0.退出\n");
+	printf("1.注销卡信息显示\n2.所有卡信息以及消费总额\n3.充值退费信息显示\n4.上下机信息显示\n0.退出\n");
 	int ch=0;
 	scanf("%d", &ch);
 	switch (ch)
@@ -399,7 +415,98 @@ void collectInfo()
 		moneyRecord();
 		break;
 	}
+	case 4:
+	{
+		billRecord();
+		break;
+	}
 	default:
 		break;
+	}
+}
+
+//管理员功能
+int delete_card()
+{
+	Card *pCard = NULL;
+	int ncount = 0;
+	char name[18];
+	char aLastTime[20]; //时间
+	int cardstore = getCardCount_binary(CARDPATHBINARY);//存储卡的数量
+	pCard = AllCards(&cardstore);
+	if (pCard == NULL)
+	{
+		printf("没有卡号！无法删除！");
+		return 0;
+	}
+	printf("-----------------------以下为当前系统中所有卡的信息-----------------------\n");
+	printf("   此卡卡号    当前状态   当前余额         累计金额     使用次数       上次使用时间\n");
+	for (int i = 0; i < cardstore; i++)
+	{
+		timeToString(pCard[i].LastTime, aLastTime);  //时间转换
+		printf("   %s         %d       %f      %f         %d     %s\n", pCard[i].Number, pCard[i].Status, pCard[i].Balance, pCard[i].fTotalUse, pCard[i].UseCount, aLastTime);
+	}
+	printf("输入删除卡号：");
+	scanf("%s", name);
+	for (ncount; ncount < cardstore; ncount++)
+	{
+		if (strcmp(pCard[ncount].Number, name) == 0)
+		{
+			break;
+		}
+	}
+	if (pCard[ncount].Status == 1)
+	{
+		printf("此卡还没下机，删除失败！\n");
+		return 0;
+	}
+	else if (ncount == cardstore)
+	{
+		printf("查找不到此卡！删除失败!\n");
+		return 0 ;
+	}
+	else
+	{
+		if (ncount != cardstore - 1) {
+			for (int i = ncount+1; i < cardstore; i++)
+			{
+				pCard[i-1] = pCard[i];
+			}
+		}
+		FILE * fp = fopen(CARDPATHBINARY, "w");
+		if (fp == NULL)
+		{
+			printf("文件打开失败!");
+			return 0;
+		}
+		else
+		{
+
+			fwrite(pCard, sizeof(Card), cardstore - 1, fp);
+			printf("删除成功!!!\n");
+			fclose(fp);
+			return 1;
+		}
+	}
+}
+void update_charge()
+{
+	int unit=0;
+	float charge = 0;
+	printf("输入计费单元：");
+	scanf("%d", &unit);
+	printf("输入计费单价：");
+	scanf("%f", &charge);
+	if (charge < 0 || unit < 0)
+	{
+		printf("输入不能小于0！");
+		return;
+	}
+	else
+	{
+		FILE * fp = fopen(CHARGEPATH, "w+");
+		fprintf(fp, "%d %f", unit, charge);
+		printf("修改成功！");
+		fclose(fp);
 	}
 }

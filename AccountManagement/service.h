@@ -12,5 +12,6 @@ double getAmount(time_t tStart);
 int annulCard(Card *p);
 int moneyRecord();
 int CardRecord();
+int billRecord();
 #endif
 

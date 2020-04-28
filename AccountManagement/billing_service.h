@@ -4,6 +4,6 @@
 void initBillingList();
 void releaseBillingList();
 int getBilling();
-
+BillingNode *GetBillList();
 Billing* queryBilling(const char * pNmae,int* pIndex);
 #endif

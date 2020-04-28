@@ -92,7 +92,7 @@ int sub_exist(char a[],char b[])
 	int i = 0, j = 0;
 	while (i < alen)
 	{
-		while (a[i] == b[i] &&i<alen)
+		while (a[i] == b[j] &&i<alen)
 		{
 			i++;
 			j++;

@@ -1,6 +1,4 @@
-﻿  menu.c
-c:\users\12852\desktop\ams\accountmanagement\menu.c(47): warning C4047: “!=”:“int”与“void *”的间接级别不同
-c:\users\12852\desktop\ams\accountmanagement\menu.c(121): warning C4013: “getCardCount_binary”未定义；假设外部返回 int
-c:\users\12852\desktop\ams\accountmanagement\menu.c(120): warning C4101: “j”: 未引用的局部变量
-c:\users\12852\desktop\ams\accountmanagement\menu.c(389): warning C4013: “annualCard”未定义；假设外部返回 int
+﻿  main.c
+c:\users\12852\desktop\ams\accountmanagement\main.c(42): warning C4013: “query”未定义；假设外部返回 int
+c:\users\12852\desktop\ams\accountmanagement\main.c(98): warning C4013: “strcmp”未定义；假设外部返回 int
   AccountManagement.vcxproj -> C:\Users\12852\Desktop\AMS\x64\Debug\AccountManagement.exe
